@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+    workspace:
+        build: ./dockerfiles/vim
+        container_name: workspace
+        tty: true
+        environment:
+            GOPATH: ~/go
+            OGBIN: ~/go/bin
