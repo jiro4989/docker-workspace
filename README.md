@@ -39,3 +39,12 @@ make build up login
 mysql -h $DB_HOSTNAME -u $DB_USERNAME -p$DB_PASSWORD $DB_DATABASE -e 'show tables;'
 ```
 
+### Jenkins画面確認
+
+- [Jenkinsホーム](http://localhost:8080/)
+初回起動時に求められるパスワードは下記のコマンドを実行して取得する。
+
+```bash
+cat data/jenkins/secrets/initialAdminPassword | xclip -selection clipboard
+```
+
