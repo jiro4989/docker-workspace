@@ -2,12 +2,18 @@ version: '3'
 
 services:
   workspace:
-    build: dockerfiles/vim
+    build: dockerfiles/workspace
     container_name: workspace
     tty: true
+    environment:
+      DB_USERNAME: "root"
+      DB_PASSWORD: "password"
+      DB_HOSTNAME: "app_db"
+      DB_PORT: "3306"
+      DB_DATABASE: "dev"
 
   app_db:
-    image: mysql
+    image: mysql:5.7
     container_name: app_db
     restart: always
     environment:

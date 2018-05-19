@@ -18,8 +18,24 @@ dockerでよく使うサーバ系アプリコンテナと開発環境を一元�
 
 ## 使い方
 
-リポジトリ直下にきて下記のコマンドを実行する。
+### コンテナ起動
+
+リポジトリ直下で下記のコマンドを実行する。
 
 ```bash
 make build up
 ```
+
+### ワークスペースにログイン
+
+```bash
+make build up login
+```
+
+#### MySQLDBにクエリ発行
+
+```bash
+# workspaceコンテナ内で
+mysql -h app_db -u root -ppassword dev -e 'show tables;'
+```
+

@@ -14,7 +14,7 @@ clean: stop
 build: clean setup
 	docker-compose build
 
-login: up
+login:
 	docker exec -it workspace zsh --login
 
 .PHONY: setup up stop clean build login
