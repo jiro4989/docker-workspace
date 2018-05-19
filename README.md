@@ -36,6 +36,6 @@ make build up login
 
 ```bash
 # workspaceコンテナ内で
-mysql -h app_db -u root -ppassword dev -e 'show tables;'
+mysql -h $DB_HOSTNAME -u $DB_USERNAME -p$DB_PASSWORD $DB_DATABASE -e 'show tables;'
 ```
 
