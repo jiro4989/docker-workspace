@@ -2,17 +2,19 @@ FROM ubuntu
 
 RUN mkdir $HOME/tmp
 RUN mkdir $HOME/go
-RUN echo 'export GOPATH=$HOME/go' >> ~/.bashrc
-RUN echo 'export GOBIN=$GOPATH/bin' >> ~/.bashrc
-RUN echo 'export PATH=$PATH:$GOPATH:$GOBIN' >> ~/.bashrc
+RUN echo 'export GOPATH=$HOME/go' >> $HOME/.bash_profile
+RUN echo 'export GOBIN=$GOPATH/bin' >> $HOME/.bash_profile
+RUN echo 'export PATH=$PATH:$GOPATH:$GOBIN' >> $HOME/.bash_profile
+RUN source $HOME/.bash_profile
 
 RUN apt-get update
 RUN apt-get upgrade -y
 
 RUN apt-get install -y zsh
 RUN apt-get install -y golang
-#RUN go get -u github.com/alecthomas/gometalinter
-#RUN go get -u github.com/golang/dep/cmd/dep
+RUN go get -u github.com/alecthomas/gometalinter
+RUN go get -u github.com/golang/dep/cmd/dep
+RUN ~/go/bin/gometalinter --install
 
 RUN apt-get install -y git build-essential ncurses-dev lua5.2 lua5.2-dev luajit python-dev python3-dev ruby-dev
 

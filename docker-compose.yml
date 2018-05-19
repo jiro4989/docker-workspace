@@ -1,10 +1,78 @@
 version: '3'
 
 services:
-    workspace:
-        build: ./dockerfiles/vim
-        container_name: workspace
-        tty: true
-        environment:
-            GOPATH: ~/go
-            OGBIN: ~/go/bin
+  #workspace:
+  #  build: dockerfiles/vim
+  #  container_name: workspace
+  #  tty: true
+  #  environment:
+  #    GOPATH: ~/go
+  #    OGBIN: ~/go/bin
+
+  app_db:
+    image: mysql
+    container_name: app_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+    ports:
+      - "3310:3306"
+    volumes:
+      - ./config/app_db/init:/docker-entrypoint-initdb.d
+    expose:
+      - 3306
+
+  jenkins:
+    image: jenkins
+    container_name: jenkins
+    ports:
+      - 8080:8080
+    volumes:
+      - ./data/jenkins:/var/jenkins_home
+
+  sonarqube:
+    image: sonarqube
+    container_name: sonarqube
+    ports:
+      - 9000:9000
+    environment:
+      - SONARQUBE_JDBC_USERNAME=sonar
+      - SONARQUBE_JDBC_PASSWORD=sonar
+      - SONARQUBE_JDBC_URL=jdbc:postgresql://sonarqube_db:5432/sonar
+    links:
+      - sonarqube_db
+    volumes:
+      - ./data/sonarqube
+
+  sonarqube_db:
+    image: postgres
+    container_name: sonarqube_db
+    environment:
+      - POSTGRES_USER=sonar
+      - POSTGRES_PASSWORD=sonar
+    volumes:
+      - ./data/sonarqube
+
+  sonarqube_datastore:
+    build: dockerfiles/sonarqube_datastore
+    container_name: sonarqube_datastore
+
+  redmine:
+    image: redmine
+    container_name: redmine
+    ports:
+      - 3000:3000
+    environment:
+      REDMINE_DB_MYSQL: redmine_db
+      REDMINE_DB_PASSWORD: redmine
+    depends_on:
+      - redmine_db
+    restart: always
+
+  redmine_db:
+    image: mariadb
+    container_name: redmine_db
+    environment:
+      MYSQL_ROOT_PASSWORD: redmine
+      MYSQL_DATABASE: redmine
+    restart: always
