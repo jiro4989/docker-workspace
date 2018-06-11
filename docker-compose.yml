@@ -17,6 +17,7 @@ services:
     container_name: app_db
     restart: always
     environment:
+      MYSQL_DATABASE: dev
       MYSQL_ROOT_PASSWORD: password
     ports:
       - "3310:3306"
