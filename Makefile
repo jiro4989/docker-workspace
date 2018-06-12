@@ -13,7 +13,7 @@ clean: stop
 	docker-compose rm -f
 	docker volume prune -f
 
-build: clean setup
+build: clean
 	docker-compose build
 
 login:
